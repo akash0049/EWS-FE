@@ -1,0 +1,59 @@
+/* Regular Font */
+@font-face {
+    font-family: 'Unilever Desire';
+    src: url('./assets/fonts/UnileverDesire-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Unilever Desire';
+    src: url('./assets/fonts/UnileverDesire-RegularItalic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Light Font */
+@font-face {
+    font-family: 'Unilever Desire';
+    src: url('./assets/fonts/UnileverDesire-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Unilever Desire';
+    src: url('./assets/fonts/UnileverDesire-LightItalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Semi Bold Font */
+@font-face {
+    font-family: 'Unilever Desire';
+    src: url('./assets/fonts/UnileverDesire-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Unilever Desire';
+    src: url('./assets/fonts/UnileverDesire-SemiBoldItalic.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Bold Font */
+@font-face {
+    font-family: 'Unilever Desire';
+    src: url('./assets/fonts/UnileverDesire-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Unilever Desire';
+    src: url('./assets/fonts/UnileverDesire-BoldItalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+}
