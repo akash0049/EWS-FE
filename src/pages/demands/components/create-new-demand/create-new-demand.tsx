@@ -1,15 +1,20 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import {
     Box,
     Typography,
-    TextField,
     Button,
     Link,
     Paper,
-    Popper,
-    ClickAwayListener,
-    Grow,
-    InputAdornment,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    IconButton,
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
 } from "@mui/material";
 import {
     CirclePlus,
@@ -17,16 +22,14 @@ import {
     Send,
     PowerOff,
     RefreshCw,
-    ArrowLeft,
-    ChevronDown,
-    Check,
-    Search,
+    X,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import CustomTextInput from "../../../../components/inputs/text-input/text-input";
+import CustomSelectInput from "../../../../components/inputs/select-input/select-input";
 
 const PRIMARY = "#0d7ff2";
 
-/* ── Mantine-style user group options ── */
+/* ── User group options ── */
 const USER_GROUP_OPTIONS = [
     { value: "admin", label: "Administrators" },
     { value: "dev", label: "Developers" },
@@ -34,288 +37,114 @@ const USER_GROUP_OPTIONS = [
     { value: "analyst", label: "Data Analysts" },
 ];
 
-/* ── Mantine-style Select Component ── */
-const MantineSelect = ({
-    label,
-    placeholder,
-    options,
-    value,
-    onChange,
-}: {
-    label: string;
-    placeholder: string;
-    options: { value: string; label: string }[];
-    value: string;
-    onChange: (val: string) => void;
-}) => {
-    const [open, setOpen] = useState(false);
-    const [search, setSearch] = useState("");
-    const anchorRef = useRef<HTMLDivElement>(null);
-    const searchRef = useRef<HTMLInputElement>(null);
+/* ── Available Users to Add ── */
+const USERS_LIST = [
+    { value: "u1", label: "Akash Mahajan" },
+    { value: "u2", label: "John Doe" },
+    { value: "u3", label: "Jane Smith" },
+    { value: "u4", label: "Alice Johnson" },
+    { value: "u5", label: "Bob Brown" },
+];
 
-    const selectedLabel = options.find((o) => o.value === value)?.label ?? "";
-    const filtered = options.filter((o) =>
-        o.label.toLowerCase().includes(search.toLowerCase())
-    );
+/* ── Dialog Props ── */
+interface CreateNewDemandDialogProps {
+    open: boolean;
+    onClose: () => void;
+}
 
-    useEffect(() => {
-        if (open && searchRef.current) {
-            setTimeout(() => searchRef.current?.focus(), 80);
-        }
-        if (!open) setSearch("");
-    }, [open]);
-
-    return (
-        <Box sx={{ position: "relative" }}>
-            {/* Label */}
-            <Typography
-                component="label"
-                sx={{
-                    display: "block",
-                    fontSize: "0.84rem",
-                    fontWeight: 600,
-                    color: "text.secondary",
-                    mb: 0.6,
-                }}
-            >
-                {label} <span style={{ color: "#fa5252" }}>*</span>
-            </Typography>
-
-            {/* Trigger */}
-            <Box
-                ref={anchorRef}
-                onClick={() => setOpen((p) => !p)}
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    borderRadius: "8px",
-                    border: open ? `1.5px solid ${PRIMARY}` : "1.5px solid #dee2e6",
-                    bgcolor: "#f8fafc",
-                    px: 1.5,
-                    py: 1,
-                    cursor: "pointer",
-                    transition: "all 0.15s ease",
-                    boxShadow: open ? `0 0 0 2px ${PRIMARY}26` : "none",
-                    "&:hover": {
-                        borderColor: open ? PRIMARY : "#adb5bd",
-                    },
-                    minHeight: 40,
-                }}
-            >
-                <Typography
-                    sx={{
-                        fontSize: "0.875rem",
-                        color: value ? "text.primary" : "#adb5bd",
-                        userSelect: "none",
-                    }}
-                >
-                    {selectedLabel || placeholder}
-                </Typography>
-                <ChevronDown
-                    size={18}
-                    color="#868e96"
-                    style={{
-                        transition: "transform 0.2s ease",
-                        transform: open ? "rotate(180deg)" : "rotate(0deg)",
-                    }}
-                />
-            </Box>
-
-            {/* Dropdown */}
-            <Popper
-                open={open}
-                anchorEl={anchorRef.current}
-                placement="bottom-start"
-                transition
-                disablePortal
-                sx={{ zIndex: 1300, width: anchorRef.current?.offsetWidth ?? "100%" }}
-            >
-                {({ TransitionProps }) => (
-                    <Grow {...TransitionProps} style={{ transformOrigin: "top left" }} timeout={150}>
-                        <Box>
-                            <ClickAwayListener onClickAway={() => setOpen(false)}>
-                                <Paper
-                                    elevation={0}
-                                    sx={{
-                                        mt: 0.5,
-                                        border: "1px solid #e9ecef",
-                                        borderRadius: "8px",
-                                        boxShadow: "0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
-                                        overflow: "hidden",
-                                    }}
-                                >
-                                    {/* Search input */}
-                                    <Box sx={{ p: 1, borderBottom: "1px solid #f1f3f5" }}>
-                                        <TextField
-                                            inputRef={searchRef}
-                                            placeholder="Search..."
-                                            size="small"
-                                            fullWidth
-                                            value={search}
-                                            onChange={(e) => setSearch(e.target.value)}
-                                            InputProps={{
-                                                startAdornment: (
-                                                    <InputAdornment position="start">
-                                                        <Search size={15} color="#adb5bd" />
-                                                    </InputAdornment>
-                                                ),
-                                            }}
-                                            sx={{
-                                                "& .MuiOutlinedInput-root": {
-                                                    borderRadius: "6px",
-                                                    bgcolor: "#f8f9fa",
-                                                    fontSize: "0.84rem",
-                                                    "& fieldset": { borderColor: "#e9ecef" },
-                                                    "&:hover fieldset": { borderColor: "#dee2e6" },
-                                                    "&.Mui-focused fieldset": { borderColor: `${PRIMARY}80`, borderWidth: 1 },
-                                                },
-                                                "& .MuiOutlinedInput-input": { py: 0.8 },
-                                            }}
-                                        />
-                                    </Box>
-
-                                    {/* Options */}
-                                    <Box sx={{ maxHeight: 200, overflowY: "auto", py: 0.5, px: 0.5 }}>
-                                        {filtered.length === 0 ? (
-                                            <Typography
-                                                sx={{
-                                                    py: 2,
-                                                    textAlign: "center",
-                                                    fontSize: "0.82rem",
-                                                    color: "text.disabled",
-                                                }}
-                                            >
-                                                No results found
-                                            </Typography>
-                                        ) : (
-                                            filtered.map((opt) => {
-                                                const isSelected = value === opt.value;
-                                                return (
-                                                    <Box
-                                                        key={opt.value}
-                                                        onClick={() => {
-                                                            onChange(opt.value);
-                                                            setOpen(false);
-                                                        }}
-                                                        sx={{
-                                                            display: "flex",
-                                                            alignItems: "center",
-                                                            justifyContent: "space-between",
-                                                            px: 1.5,
-                                                            py: 0.9,
-                                                            borderRadius: "6px",
-                                                            cursor: "pointer",
-                                                            fontSize: "0.86rem",
-                                                            fontWeight: isSelected ? 500 : 400,
-                                                            color: isSelected ? PRIMARY : "text.primary",
-                                                            bgcolor: isSelected ? `${PRIMARY}0D` : "transparent",
-                                                            transition: "all 0.12s ease",
-                                                            "&:hover": {
-                                                                bgcolor: isSelected ? `${PRIMARY}14` : "#f1f3f5",
-                                                            },
-                                                        }}
-                                                    >
-                                                        {opt.label}
-                                                        {isSelected && <Check size={15} color={PRIMARY} />}
-                                                    </Box>
-                                                );
-                                            })
-                                        )}
-                                    </Box>
-                                </Paper>
-                            </ClickAwayListener>
-                        </Box>
-                    </Grow>
-                )}
-            </Popper>
-        </Box>
-    );
-};
-
-const CreateNewDemand = () => {
-    const navigate = useNavigate();
-
+const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
     const [demandName, setDemandName] = useState("");
     const [userGroup, setUserGroup] = useState("");
     const [groupEmail, setGroupEmail] = useState("");
     const [selectedGroup, setSelectedGroup] = useState("");
+    const [usersInGroup, setUsersInGroup] = useState<typeof USERS_LIST>([]);
+
+    const handleClose = () => {
+        setDemandName("");
+        setUserGroup("");
+        setGroupEmail("");
+        setSelectedGroup("");
+        setUsersInGroup([]);
+        onClose();
+    };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, height: "100%" }}>
-            {/* ── Page Header ── */}
-            <Box
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            maxWidth="lg"
+            fullWidth
+            PaperProps={{
+                sx: {
+                    height: "95vh",
+                    borderRadius: 3,
+                    overflow: "visible",
+                    boxShadow: "0 24px 64px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08)",
+                },
+            }}
+        >
+            {/* ── Dialog Header ── */}
+            <DialogTitle
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    alignItems: "flex-end",
-                    flexWrap: "wrap",
-                    gap: 2,
+                    alignItems: "flex-start",
+                    pb: 1,
+                    pt: 2.5,
+                    px: 3,
+                    borderBottom: "1px solid",
+                    borderColor: "divider",
                 }}
             >
                 <Box>
-                    <Typography
-                        variant="h6"
-                        fontWeight={800}
-                        letterSpacing="-0.5px"
-                        color="text.primary"
-                    >
+                    <Typography variant="h6" fontWeight={800} letterSpacing="-0.5px" color="text.primary">
                         Create New Demand
                     </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ mt: 0.25 }}>
+                    <Typography variant="caption" color="text.secondary" sx={{ mt: 0.25, display: "block" }}>
                         New Demand to be created by DQ Engagement Team
                     </Typography>
                 </Box>
-
-                <Box sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
-                    <Button
-                        variant="outlined"
-                        startIcon={<ArrowLeft size={16} />}
-                        onClick={() => navigate("/")}
-                        sx={{
-                            height: 40,
-                            borderRadius: 2,
-                            fontWeight: 500,
-                            textTransform: "none",
-                            borderColor: PRIMARY,
-                            color: PRIMARY,
-                            "&:hover": {
-                                borderColor: PRIMARY,
-                                backgroundColor: `${PRIMARY}0A`,
-                            },
-                        }}
-                    >
-                        Back to Demands
-                    </Button>
-                </Box>
-            </Box>
-
-            {/* ── Two-Column Grid ── */}
-            <Box
-                sx={{
-                    flex: 1,
-                    minHeight: 0,
-                    display: "grid",
-                    gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" },
-                    gap: 3,
-                    mt: 1,
-                }}
-            >
-                {/* ── Left: Create New Demand ── */}
-                <Paper
-                    variant="outlined"
+                <IconButton
+                    onClick={handleClose}
+                    size="small"
                     sx={{
-                        p: 4,
-                        borderRadius: 3,
-                        border: "1px solid",
-                        borderColor: "divider",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 3,
+                        mt: 0.5,
+                        color: "text.secondary",
+                        borderRadius: 1.5,
+                        "&:hover": { bgcolor: "action.hover" },
                     }}
                 >
-                    {/* Section Header */}
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+                    <X size={18} />
+                </IconButton>
+            </DialogTitle>
+
+            {/* ── Dialog Content ── */}
+            <DialogContent sx={{ p: 3, overflow: "visible" }}>
+                {/* ── Two-Column Grid ── */}
+                <Box
+                    sx={{
+                        display: "grid",
+                        gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" },
+                        gap: 3,
+                        mt: 2,
+                    }}
+                >
+                    {/* ── Left: Create New Demand ── */}
+                    <Paper
+                        variant="outlined"
+                        sx={{
+                            height: "74vh",
+                            px: 4,
+                            py: 2,
+                            borderRadius: 3,
+                            border: "1px solid",
+                            borderColor: "divider",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 3,
+                        }}
+                    >
+                        {/* Section Header */}
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                             <Box
                                 sx={{
@@ -333,227 +162,231 @@ const CreateNewDemand = () => {
                                 Create New Demand
                             </Typography>
                         </Box>
-                    </Box>
 
-                    {/* Form Fields */}
-                    <Box
-                        component="form"
-                        sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}
-                        onSubmit={(e) => e.preventDefault()}
-                    >
-                        <TextField
-                            label="Project Demand Name"
-                            placeholder="Enter demand name"
-                            required
-                            fullWidth
-                            size="small"
-                            value={demandName}
-                            onChange={(e) => setDemandName(e.target.value)}
-                            InputLabelProps={{
-                                sx: { fontSize: "0.85rem", fontWeight: 600 },
-                            }}
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius: 2,
-                                    bgcolor: "#f8fafc",
-                                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                                        borderColor: PRIMARY,
-                                    },
-                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                                        borderColor: PRIMARY,
-                                    },
-                                },
-                            }}
-                        />
-                        <TextField
-                            label="User Group"
-                            placeholder="Specify user group"
-                            required
-                            fullWidth
-                            size="small"
-                            value={userGroup}
-                            onChange={(e) => setUserGroup(e.target.value)}
-                            InputLabelProps={{
-                                sx: { fontSize: "0.85rem", fontWeight: 600 },
-                            }}
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius: 2,
-                                    bgcolor: "#f8fafc",
-                                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                                        borderColor: PRIMARY,
-                                    },
-                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                                        borderColor: PRIMARY,
-                                    },
-                                },
-                            }}
-                        />
-                        <TextField
-                            label="Group Email"
-                            placeholder="example@company.com"
-                            type="email"
-                            required
-                            fullWidth
-                            size="small"
-                            value={groupEmail}
-                            onChange={(e) => setGroupEmail(e.target.value)}
-                            InputLabelProps={{
-                                sx: { fontSize: "0.85rem", fontWeight: 600 },
-                            }}
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius: 2,
-                                    bgcolor: "#f8fafc",
-                                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                                        borderColor: PRIMARY,
-                                    },
-                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                                        borderColor: PRIMARY,
-                                    },
-                                },
-                            }}
-                        />
-                        <Button
-                            variant="contained"
-                            startIcon={<Send size={16} />}
-                            sx={{
-                                mt: 1.5,
-                                py: 1.3,
-                                borderRadius: 2,
-                                fontWeight: 700,
-                                textTransform: "none",
-                                fontSize: "0.9rem",
-                                bgcolor: PRIMARY,
-                                "&:hover": {
-                                    bgcolor: `${PRIMARY}E6`,
-                                },
-                                boxShadow: "none",
-                            }}
-                        >
-                            Create Demand
-                        </Button>
-                    </Box>
-                </Paper>
-
-                {/* ── Right: Manage User Group ── */}
-                <Paper
-                    variant="outlined"
-                    sx={{
-                        p: 4,
-                        borderRadius: 3,
-                        border: "1px solid",
-                        borderColor: "divider",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 3,
-                    }}
-                >
-                    {/* Section Header */}
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                        {/* Form Fields */}
                         <Box
-                            sx={{
-                                p: 1,
-                                bgcolor: `${PRIMARY}1A`,
-                                borderRadius: 2,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
+                            component="form"
+                            sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}
+                            onSubmit={(e) => e.preventDefault()}
                         >
-                            <UserCog size={22} color={PRIMARY} />
-                        </Box>
-                        <Typography variant="h6" fontWeight={700} color="text.primary">
-                            Manage User Group
-                        </Typography>
-                    </Box>
+                            <CustomTextInput
+                                label="Project Demand Name"
+                                placeholder="Enter demand name"
+                                required
 
-                    {/* Content */}
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: 3, flex: 1 }}>
-                        {/* Select User Group - Mantine-style */}
-                        <MantineSelect
-                            label="User Group"
-                            placeholder="Select a user group"
-                            options={USER_GROUP_OPTIONS}
-                            value={selectedGroup}
-                            onChange={setSelectedGroup}
-                        />
-
-                        {/* Manage Button */}
-                        <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Button
-                                variant="outlined"
+                                value={demandName}
+                                onChange={(e) => setDemandName(e.target.value)}
                                 sx={{
-                                    width: { xs: "100%", sm: "auto" },
-                                    px: 5,
-                                    py: 1.2,
+                                    "& .MuiOutlinedInput-root": {
+                                        borderRadius: 2,
+                                        bgcolor: "#f8fafc",
+                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: PRIMARY },
+                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: PRIMARY },
+                                    },
+                                }}
+                            />
+                            <CustomTextInput
+                                label="User Group"
+                                placeholder="Enter user group"
+                                required
+
+                                value={userGroup}
+                                onChange={(e) => setUserGroup(e.target.value)}
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        borderRadius: 2,
+                                        bgcolor: "#f8fafc",
+                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: PRIMARY },
+                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: PRIMARY },
+                                    },
+                                }}
+                            />
+                            <CustomTextInput
+                                label="Group Email"
+                                placeholder="example@company.com"
+                                description="By providing this email, you will receive notifications regarding this demand."
+                                type="email"
+                                value={groupEmail}
+                                onChange={(e) => setGroupEmail(e.target.value)}
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        borderRadius: 2,
+                                        bgcolor: "#f8fafc",
+                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: PRIMARY },
+                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: PRIMARY },
+                                    },
+                                }}
+                            />
+                            <Button
+                                variant="contained"
+                                startIcon={<Send size={16} />}
+                                sx={{
+                                    mt: 1.5,
+                                    py: 1.3,
                                     borderRadius: 2,
                                     fontWeight: 700,
                                     textTransform: "none",
                                     fontSize: "0.9rem",
-                                    borderWidth: 2,
-                                    borderColor: PRIMARY,
-                                    color: PRIMARY,
-                                    "&:hover": {
-                                        borderWidth: 2,
-                                        borderColor: PRIMARY,
-                                        bgcolor: `${PRIMARY}0D`,
-                                    },
+                                    bgcolor: PRIMARY,
+                                    "&:hover": { bgcolor: `${PRIMARY}E6` },
+                                    boxShadow: "none",
                                 }}
                             >
-                                Manage User Group
+                                Create Demand
                             </Button>
                         </Box>
+                    </Paper>
 
-                        {/* Bottom Links */}
-                        <Box
-                            sx={{
-                                mt: "auto",
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: 2,
-                                borderTop: "1px solid",
-                                borderColor: "divider",
-                                pt: 3,
-                            }}
-                        >
-                            <Link
-                                href="#"
-                                underline="hover"
+                    {/* ── Right: Manage User Group ── */}
+                    <Paper
+                        variant="outlined"
+                        sx={{
+                            px: 4,
+                            py: 2,
+                            borderRadius: 3,
+                            border: "1px solid",
+                            borderColor: "divider",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 3,
+                        }}
+                    >
+                        {/* Section Header */}
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                            <Box
                                 sx={{
+                                    p: 1,
+                                    bgcolor: `${PRIMARY}1A`,
+                                    borderRadius: 2,
                                     display: "flex",
                                     alignItems: "center",
-                                    gap: 1,
-                                    color: PRIMARY,
-                                    fontSize: "0.85rem",
-                                    fontWeight: 500,
-                                    cursor: "pointer",
+                                    justifyContent: "center",
                                 }}
                             >
-                                <PowerOff size={16} />
-                                Click here to deactivate bulk live rules.
-                            </Link>
-                            <Link
-                                href="#"
-                                underline="hover"
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: 1,
-                                    color: PRIMARY,
-                                    fontSize: "0.85rem",
-                                    fontWeight: 500,
-                                    cursor: "pointer",
-                                }}
-                            >
-                                <RefreshCw size={16} />
-                                Click here to update rule status.
-                            </Link>
+                                <UserCog size={22} color={PRIMARY} />
+                            </Box>
+                            <Typography variant="h6" fontWeight={700} color="text.primary">
+                                Manage User Group
+                            </Typography>
                         </Box>
-                    </Box>
-                </Paper>
-            </Box>
-        </Box>
+
+                        {/* Content */}
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 3, flex: 1 }}>
+                            <CustomSelectInput
+                                label="User Group"
+                                placeholder="Select a user group"
+                                description="Please select a user group to manage it."
+                                options={USER_GROUP_OPTIONS}
+                                value={selectedGroup}
+                                onChange={(value) => setSelectedGroup(value != null ? String(value) : "")}
+                            />
+
+                            {selectedGroup && (
+                                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                                    <TableContainer
+                                        component={Paper}
+                                        variant="outlined"
+                                        sx={{
+                                            borderRadius: 2,
+                                            maxHeight: "28vh",
+                                            "&::-webkit-scrollbar": { width: 6 },
+                                            "&::-webkit-scrollbar-thumb": { bgcolor: "rgba(0,0,0,0.1)", borderRadius: 3 }
+                                        }}
+                                    >
+                                        <Table stickyHeader size="small">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell sx={{ fontWeight: 600, bgcolor: "#f8fafc", color: "text.secondary" }}>Name</TableCell>
+                                                    <TableCell align="right" sx={{ fontWeight: 600, bgcolor: "#f8fafc", color: "text.secondary", width: 100 }}>Action</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {USERS_LIST.map((user) => {
+                                                    const isAdded = usersInGroup.some(u => u.value === user.value);
+                                                    return (
+                                                        <TableRow key={user.value} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                                                            <TableCell sx={{ color: "text.primary", fontWeight: 500 }}>{user.label}</TableCell>
+                                                            <TableCell align="right">
+                                                                <Button
+                                                                    size="small"
+                                                                    variant={isAdded ? "outlined" : "contained"}
+                                                                    color={isAdded ? "error" : "primary"}
+                                                                    onClick={() => {
+                                                                        if (isAdded) {
+                                                                            setUsersInGroup(usersInGroup.filter(u => u.value !== user.value));
+                                                                        } else {
+                                                                            setUsersInGroup([...usersInGroup, user]);
+                                                                        }
+                                                                    }}
+                                                                    sx={{
+                                                                        borderRadius: 1.5,
+                                                                        textTransform: "none",
+                                                                        fontWeight: 600,
+                                                                        boxShadow: "none",
+                                                                        "&:hover": { boxShadow: "none" }
+                                                                    }}
+                                                                >
+                                                                    {isAdded ? "Remove" : "Add"}
+                                                                </Button>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    );
+                                                })}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </Box>
+                            )}
+
+                            <Box
+                                sx={{
+                                    mt: "auto",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: 2,
+                                    borderTop: "1px solid",
+                                    borderColor: "divider",
+                                    pt: 3,
+                                }}
+                            >
+                                <Link
+                                    href="#"
+                                    underline="hover"
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 1,
+                                        color: PRIMARY,
+                                        fontSize: "0.85rem",
+                                        fontWeight: 500,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    <PowerOff size={16} />
+                                    Click here to deactivate bulk live rules.
+                                </Link>
+                                <Link
+                                    href="#"
+                                    underline="hover"
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 1,
+                                        color: PRIMARY,
+                                        fontSize: "0.85rem",
+                                        fontWeight: 500,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    <RefreshCw size={16} />
+                                    Click here to update rule status.
+                                </Link>
+                            </Box>
+                        </Box>
+                    </Paper>
+                </Box>
+            </DialogContent>
+        </Dialog>
     );
 };
 

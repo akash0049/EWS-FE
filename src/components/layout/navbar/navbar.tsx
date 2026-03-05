@@ -55,7 +55,7 @@ export default function Navbar() {
                         src={GDTLogo}
                         alt="GDT Logo"
                         sx={{
-                            height: '54px',
+                            height: '55px',
                             width: 'auto',
                             display: 'block',
                         }}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import MaterialTable from "../../components/tables/material-table/material-table";
 import { type MRT_ColumnDef } from "material-react-table";
 import {
@@ -14,7 +15,7 @@ import {
     Plus,
     Globe,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import CreateNewDemand from "./components/create-new-demand/create-new-demand";
 
 type Status = "Active" | "Inactive";
 
@@ -218,7 +219,7 @@ const COLUMNS: MRT_ColumnDef<Demand>[] = [
 ];
 
 const Demands = () => {
-    const navigate = useNavigate();
+    const [createOpen, setCreateOpen] = useState(false);
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, height: "100%" }}>
             {/* ── Page Header ── */}
@@ -249,7 +250,7 @@ const Demands = () => {
                     <Button
                         variant="contained"
                         startIcon={<Plus size={16} />}
-                        onClick={() => navigate("/demands/create")}
+                        onClick={() => setCreateOpen(true)}
                         sx={{
                             height: 40,
                             borderRadius: 2,
@@ -282,6 +283,9 @@ const Demands = () => {
                     50% { opacity: 0.3; }
                 }
             `}</style>
+
+            {/* ── Create New Demand Dialog ── */}
+            <CreateNewDemand open={createOpen} onClose={() => setCreateOpen(false)} />
         </Box>
     );
 };
