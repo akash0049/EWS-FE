@@ -18,6 +18,22 @@ interface AddObjectDialogProps {
     onClose: (open: boolean) => void;
 }
 
+const XOPS_List = [
+    { value: "Commercial", label: "Commercial" },
+    { value: "Consumer", label: "Consumer" },
+    { value: "Customer Development", label: "Customer Development" },
+    { value: "Customer Operations", label: "Customer Operations" },
+    { value: "People", label: "People" },
+    { value: "Supply Chat & R&D", label: "Supply Chat & R&D" },
+    { value: "Unknown", label: "Unknown" },
+];
+
+const OBJECT_LIST = [
+    { value: "Account[SOB52770]Carelines Consumer", label: "Account[SOB52770]Carelines Consumer" },
+    { value: "ActivityRequest[SOB50369]", label: "ActivityRequest[SOB50369]" },
+    { value: "Aggregateddata[TOB58568]", label: "Aggregateddata[TOB58568]" },
+];
+
 const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
     const [xops, setXops] = useState("");
     const [objectName, setObjectName] = useState("");
@@ -25,7 +41,10 @@ const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
     return (
         <Dialog
             open={open}
-            onClose={() => onClose(false)}
+            onClose={(_event, reason) => {
+                if (reason === "backdropClick") return; // prevent close on outside click
+                onClose(false);
+            }}
             maxWidth="xs"
             fullWidth
             PaperProps={{
@@ -44,7 +63,8 @@ const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    p: 0,
+                    px: 0,
+                    py: 0.5,
                     borderBottom: "1px solid",
                     borderColor: "divider",
                 }}
@@ -83,7 +103,7 @@ const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
                         label="XOps"
                         placeholder="Select a xops"
                         required
-                        options={[]}
+                        options={XOPS_List}
                         value={xops}
                         onChange={(value) => setXops(value != null ? String(value) : "")}
                     />
@@ -91,7 +111,7 @@ const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
                         label="Object Name"
                         placeholder="Select a object name"
                         required
-                        options={[]}
+                        options={OBJECT_LIST}
                         value={objectName}
                         onChange={(value) => setObjectName(value != null ? String(value) : "")}
                     />
@@ -119,8 +139,9 @@ const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
             </DialogContent>
             <DialogActions sx={{ p: 0, my: 0, mx: 4 }}>
                 <Button
+                    color="secondary"
                     variant="outlined"
-                    onClick={() => { }}
+                    onClick={() => onClose(false)}
                 >
                     Close
                 </Button>

@@ -135,7 +135,7 @@ const ActionButtons = () => {
                 <IconButton
                     size="small"
                     sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
-                    onClick={() => navigate("/high-level-demand")}
+                    onClick={() => navigate("/1/high-level-demand")}
                 >
                     <TrendingUp size={16} />
                 </IconButton>
@@ -144,6 +144,8 @@ const ActionButtons = () => {
                 <IconButton
                     size="small"
                     sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
+                    onClick={() => navigate("/1/user-rule")}
+
                 >
                     <Users size={16} />
                 </IconButton>

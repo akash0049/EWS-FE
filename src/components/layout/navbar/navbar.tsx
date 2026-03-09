@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -24,6 +25,9 @@ const user = {
 };
 
 export default function Navbar() {
+    const params = useParams();
+    const demandId = params.demandId;
+
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -78,6 +82,24 @@ export default function Navbar() {
 
                 {/* ── Right: User Profile ── */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    {demandId &&
+                        <>
+                            <Box sx={{ textAlign: 'right', display: { xs: 'none', sm: 'block' } }}>
+                                <Typography
+                                    sx={{ color: '#fff', fontWeight: 'bold', lineHeight: 1.2, fontSize: '0.75rem' }}
+                                >
+                                    Demand: Net_Productivity [372]
+                                </Typography>
+                            </Box>
+
+                            <Divider
+                                orientation="vertical"
+                                flexItem
+                                sx={{ borderColor: '#fff', my: 1 }}
+                            />
+                        </>
+                    }
+
                     <Box sx={{ textAlign: 'right', display: { xs: 'none', sm: 'block' } }}>
                         <Typography
                             sx={{ color: '#fff', fontWeight: 500, lineHeight: 1.2, fontSize: '0.75rem' }}

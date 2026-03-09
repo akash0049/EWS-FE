@@ -57,11 +57,13 @@ export default function GenericTable<TData extends Record<string, any> = Record<
             columnVisibility,
             density: 'comfortable',
             pagination: { pageSize: 10, pageIndex: 0 },
+            ...options.initialState,
         },
         state: {
             isLoading,
             showSkeletons: isLoading,
             showProgressBars: isRefetching,
+            ...options.state,
         },
         muiTablePaperProps: {
             elevation: 0,
@@ -219,6 +221,23 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                     </Box>
                 </Box>
             );
+        },
+        muiToolbarAlertBannerProps: {
+            sx: {
+                '& .MuiAlert-message': {
+                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontWeight: 500,
+                },
+                '& .MuiChip-label': {
+                    fontSize: 'clamp(9px, 11px, 13px)',
+                },
+                '& .MuiButton-root': {
+                    fontSize: '0.75rem',
+                    padding: '2px 8px',
+                    minWidth: 'auto',
+                    textTransform: 'none',
+                }
+            },
         },
         ...options,
     } as MRT_TableOptions<TData>);

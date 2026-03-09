@@ -1,16 +1,14 @@
 import { forwardRef, useId } from "react";
-import {
-    Box,
-    Typography,
-    TextField,
-    type TextFieldProps,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker, type TimePickerProps } from '@mui/x-date-pickers/TimePicker';
 
 /* ─────────────────────────────────────────────
    Props
 ───────────────────────────────────────────── */
-export interface CustomTextInputProps
-    extends Omit<TextFieldProps, "label" | "helperText" | "variant"> {
+export interface CustomTimePickerProps
+    extends Omit<TimePickerProps, "label"> {
     /** Static label rendered above the input (Mantine-style) */
     label?: string;
     /** Sub-label / hint rendered below the input */
@@ -19,14 +17,16 @@ export interface CustomTextInputProps
      * When `error` is true and this is provided it replaces `description`.
      */
     errorMessage?: string;
-    /** Makes the input read-only (prevents editing but allows selection/copying) */
-    readOnly?: boolean;
+    /** Standard HTML required attribute */
+    required?: boolean;
+    /** Error state */
+    error?: boolean;
 }
 
 /* ─────────────────────────────────────────────
    Component
 ───────────────────────────────────────────── */
-const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
+const CustomTimePicker = forwardRef<HTMLDivElement, CustomTimePickerProps>(
     (
         {
             label,
@@ -35,8 +35,7 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
             required = false,
             error = false,
             disabled = false,
-            readOnly = false, // <-- Destructured the new prop here
-            id: idProp,
+            readOnly = false,
             sx,
             slotProps,
             ...rest
@@ -44,7 +43,7 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
         ref
     ) => {
         const autoId = useId();
-        const inputId = idProp ?? autoId;
+        const inputId = autoId;
 
         const helperText = error ? (errorMessage ?? description) : description;
 
@@ -67,7 +66,7 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
                             display: "inline-flex",
                             alignItems: "baseline",
                             gap: "2px",
-                            fontSize: "0.8rem",
+                            fontSize: "clamp(10px, 12px, 14px)",
                             fontWeight: 500,
                             color: disabled ? "text.disabled" : "text.primary",
                             mb: "4px",
@@ -83,7 +82,7 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
                                 aria-hidden="true"
                                 sx={{
                                     color: "error.main",
-                                    fontSize: "0.75rem",
+                                    fontSize: "clamp(10px, 12px, 14px)",
                                     lineHeight: 1,
                                     ml: "1px",
                                     fontWeight: 700,
@@ -95,65 +94,58 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
                     </Typography>
                 )}
 
-                {/* ── MUI TextField ── */}
-                <TextField
-                    id={inputId}
-                    variant="outlined"
-                    error={error}
-                    required={required}
-                    disabled={disabled}
-                    fullWidth
-                    size="small"
-                    slotProps={{
-                        ...slotProps,
-                        inputLabel: {
-                            shrink: false,
-                            sx: { display: "none" },
-                            ...((slotProps?.inputLabel as Record<string, unknown>) ?? {}),
-                        },
-                        // Pass readOnly down to the underlying MUI Input component
-                        input: {
-                            readOnly: readOnly,
-                            ...((slotProps?.input as Record<string, unknown>) ?? {}),
-                        },
-                    }}
-                    sx={{
-                        "& .MuiOutlinedInput-root": {
-                            "& legend": { display: "none" },
-                            "& fieldset": { top: 0 },
-                            borderRadius: "4px",
-                            backgroundColor: "#FFFFFF",
-
-                            "&.MuiInputBase-multiline": {
-                                padding: "8px 14px",
-                            },
-                            // Visual cue for readOnly state (slightly greyed out)
-                            "&.Mui-readOnly": {
-                                backgroundColor: "#f8fafc", // Tailwind slate-50 equivalent
-                                cursor: "default",
-                            },
-                        },
-                        "& .MuiOutlinedInput-input": {
-                            fontSize: "0.8rem",
-                            "&::placeholder": {
-                                fontSize: "0.8rem",
-                            },
-                            // Ensure the cursor isn't a text I-beam if you don't want it to look editable
-                            // Remove this line if you still want users to feel they can click and drag to copy text
-                            "&.Mui-readOnly": {
-                                color: "text.secondary",
+                {/* ── MUI TimePicker ── */}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <TimePicker
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        slotProps={{
+                            ...slotProps,
+                            textField: {
+                                id: inputId,
+                                error: error,
+                                required: required,
+                                fullWidth: true,
+                                size: "small",
+                                ...((slotProps?.textField as Record<string, unknown>) ?? {}),
+                                sx: {
+                                    "& .MuiPickersOutlinedInput-root": {
+                                        height: '35px',
+                                        fontSize: "clamp(10px, 12px, 14px)",
+                                    },
+                                    "& .MuiOutlinedInput-root": {
+                                        "& legend": { display: "none" },
+                                        "& fieldset": { top: 0 },
+                                        borderRadius: "4px",
+                                        backgroundColor: "#FFFFFF",
+                                        "&.Mui-readOnly": {
+                                            backgroundColor: "#f8fafc",
+                                            cursor: "default",
+                                        },
+                                    },
+                                    "& .MuiOutlinedInput-input": {
+                                        fontSize: "clamp(10px, 12px, 14px)",
+                                        "&::placeholder": {
+                                            fontSize: "clamp(10px, 12px, 14px)",
+                                        },
+                                        "&.Mui-readOnly": {
+                                            color: "text.secondary",
+                                        }
+                                    },
+                                    ...(((slotProps?.textField as Record<string, unknown>)?.sx as object) ?? {})
+                                }
                             }
-                        },
-                    }}
-                    {...rest}
-                />
+                        }}
+                        {...rest}
+                    />
+                </LocalizationProvider>
 
                 {/* ── Mantine-style description / error message ── */}
                 {helperText && (
                     <Typography
                         sx={{
                             mt: "6px",
-                            fontSize: "0.6rem",
+                            fontSize: "clamp(6px, 8px, 10px)",
                             lineHeight: 1.45,
                             color: error ? "error.main" : "text.secondary",
                         }}
@@ -166,6 +158,6 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
     }
 );
 
-CustomTextInput.displayName = "CustomTextInput";
+CustomTimePicker.displayName = "CustomTimePicker";
 
-export default CustomTextInput;
+export default CustomTimePicker;

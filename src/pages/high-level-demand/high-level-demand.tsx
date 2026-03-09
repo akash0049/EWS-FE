@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { type MRT_ColumnDef } from "material-react-table";
 import {
     Box,
@@ -6,15 +7,13 @@ import {
     Typography,
     Chip,
     Tooltip,
-    Alert,
-    Link
+    // Alert
 } from "@mui/material";
 import MaterialTable from "../../components/tables/material-table/material-table";
 import DemandDetails from "./components/demand-details";
-import { OpenInNew, DeleteOutline } from "@mui/icons-material";
+import { DeleteOutline, ArrowCircleRight } from "@mui/icons-material";
 import AddObjectDialog from "./components/add-object";
-
-const PRIMARY = "#0d7ff2";
+import CustomIconButton from "../../components/buttons/icon-button/icon-button";
 
 const ALL_DATA: {}[] = [
     {
@@ -50,6 +49,8 @@ const ALL_DATA: {}[] = [
 ];
 
 const HighLevelDemand = () => {
+    const navigate = useNavigate();
+
     const [openDemandDetails, setOpenDemandDetails] = useState(false);
     const [openAddObject, setOpenAddObject] = useState(false);
 
@@ -175,6 +176,11 @@ const HighLevelDemand = () => {
                     >
                         Save Requirement
                     </Button>
+                    <CustomIconButton
+                        title="Click here to Configure Rules"
+                        icon={<ArrowCircleRight fontSize="medium" />}
+                        onClick={() => navigate("/1/user-rule")}
+                    />
                 </Box>
             </Box>
 
@@ -195,22 +201,6 @@ const HighLevelDemand = () => {
                     gap={2}
                     borderColor="divider"
                 >
-                    <Link
-                        href="#"
-                        underline="hover"
-                        sx={{
-                            color: PRIMARY,
-                            fontWeight: 500,
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                            fontSize: '0.8rem'
-                        }}
-                    >
-                        Click here to add more details by Engagement Team
-                        <OpenInNew fontSize="small" />
-                    </Link>
-
                     <Alert
                         severity="warning"
                         icon={false}

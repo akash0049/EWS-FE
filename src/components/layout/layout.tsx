@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import { Outlet } from 'react-router-dom';
 import Navbar from './navbar/navbar';
 import Sidebar from './sidebar/sidebar';
 
@@ -22,7 +23,7 @@ const AppLayout = ({ children }: { children?: React.ReactNode }) => {
             >
                 <Toolbar variant="dense" sx={{ minHeight: 44, flexShrink: 0 }} />
                 <Box sx={{ flex: 1, overflow: 'hidden', px: 2, py: 2, display: 'flex', flexDirection: 'column' }}>
-                    {children}
+                    {children || <Outlet />}
                 </Box>
             </Box>
         </Box>

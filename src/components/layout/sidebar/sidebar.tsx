@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -15,10 +16,10 @@ export const DRAWER_WIDTH = 220;
 export const DRAWER_COLLAPSED_WIDTH = 60;
 
 const navItems = [
-    { label: 'Demands', icon: <FileText size={19} />, id: 'demands' },
-    { label: 'Translator', icon: <Languages size={19} />, id: 'translator' },
-    { label: 'Annexure', icon: <PaperclipIcon size={19} />, id: 'annexure' },
-    { label: 'User Manual', icon: <BookOpen size={19} />, id: 'user-manual' },
+    { label: 'Demands', icon: <FileText size={19} />, id: 'demands', path: '/' },
+    { label: 'Translator', icon: <Languages size={19} />, id: 'translator', path: '/' },
+    { label: 'Annexure', icon: <PaperclipIcon size={19} />, id: 'annexure', path: '/' },
+    { label: 'User Manual', icon: <BookOpen size={19} />, id: 'user-manual', path: '/' },
 ];
 
 /** Shared styles for every nav button (active and inactive). */
@@ -55,6 +56,8 @@ const navButtonSx = (isActive: boolean, collapsed: boolean) => ({
 });
 
 export default function Sidebar() {
+    const navigate = useNavigate();
+
     const [activeId, setActiveId] = useState<string>('demands');
     const [collapsed, setCollapsed] = useState(false);
 
@@ -97,7 +100,10 @@ export default function Sidebar() {
                             <Tooltip title={collapsed ? item.label : ''} placement="right" arrow>
                                 <ListItemButton
                                     selected={isActive}
-                                    onClick={() => setActiveId(item.id)}
+                                    onClick={() => {
+                                        setActiveId(item.id);
+                                        navigate(item.path);
+                                    }}
                                     sx={navButtonSx(isActive, collapsed)}
                                 >
                                     <ListItemIcon
