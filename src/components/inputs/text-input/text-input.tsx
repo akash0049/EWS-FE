@@ -71,12 +71,12 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
                             display: "inline-flex",
                             alignItems: "baseline",
                             gap: "2px",
-                            fontSize: "0.875rem",
+                            fontSize: "0.8rem",
                             fontWeight: 500,
                             /* Use MUI's text.primary so it honours dark/light themes */
                             color: disabled ? "text.disabled" : "text.primary",
                             mb: "4px",
-                            lineHeight: 1.4,
+                            lineHeight: 1.2,
                             userSelect: "none",
                         }}
                     >
@@ -130,8 +130,12 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
                         },
                         /* ── custom size: between MUI small (~40px) and medium (~56px) ── */
                         "& .MuiOutlinedInput-input": {
-                            paddingTop: "10px",
-                            paddingBottom: "10px",
+                            paddingTop: "6px",
+                            paddingBottom: "6px",
+                            fontSize: "0.8rem",
+                            "&::placeholder": {
+                                fontSize: "0.8rem",
+                            },
                         },
                     }}
                     {...rest}
@@ -142,7 +146,7 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
                     <Typography
                         sx={{
                             mt: "6px",
-                            fontSize: "0.78rem",
+                            fontSize: "0.6rem",
                             lineHeight: 1.45,
                             color: error ? "error.main" : "text.secondary",
                         }}

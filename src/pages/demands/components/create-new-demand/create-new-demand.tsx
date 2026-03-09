@@ -19,7 +19,6 @@ import {
 import {
     CirclePlus,
     UserCog,
-    Send,
     PowerOff,
     RefreshCw,
     X,
@@ -72,11 +71,11 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
         <Dialog
             open={open}
             onClose={handleClose}
-            maxWidth="lg"
+            maxWidth="md"
             fullWidth
             PaperProps={{
                 sx: {
-                    height: "95vh",
+                    height: "90vh",
                     borderRadius: 3,
                     overflow: "visible",
                     boxShadow: "0 24px 64px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08)",
@@ -97,7 +96,7 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                 }}
             >
                 <Box>
-                    <Typography variant="h6" fontWeight={800} letterSpacing="-0.5px" color="text.primary">
+                    <Typography variant="body1" fontWeight={800} letterSpacing="-0.5px" color="text.primary">
                         Create New Demand
                     </Typography>
                     <Typography variant="caption" color="text.secondary" sx={{ mt: 0.25, display: "block" }}>
@@ -133,7 +132,7 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                     <Paper
                         variant="outlined"
                         sx={{
-                            height: "74vh",
+                            height: "70vh",
                             px: 4,
                             py: 2,
                             borderRadius: 3,
@@ -156,9 +155,9 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                                     justifyContent: "center",
                                 }}
                             >
-                                <CirclePlus size={22} color={PRIMARY} />
+                                <CirclePlus size={14} color={PRIMARY} />
                             </Box>
-                            <Typography variant="h6" fontWeight={700} color="text.primary">
+                            <Typography variant="body2" fontWeight={600} color="text.primary">
                                 Create New Demand
                             </Typography>
                         </Box>
@@ -173,7 +172,6 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                                 label="Project Demand Name"
                                 placeholder="Enter demand name"
                                 required
-
                                 value={demandName}
                                 onChange={(e) => setDemandName(e.target.value)}
                                 sx={{
@@ -219,14 +217,13 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                             />
                             <Button
                                 variant="contained"
-                                startIcon={<Send size={16} />}
                                 sx={{
                                     mt: 1.5,
-                                    py: 1.3,
-                                    borderRadius: 2,
-                                    fontWeight: 700,
+                                    py: 1,
+                                    borderRadius: "4px",
+                                    fontWeight: 600,
                                     textTransform: "none",
-                                    fontSize: "0.9rem",
+                                    fontSize: "0.8rem",
                                     bgcolor: PRIMARY,
                                     "&:hover": { bgcolor: `${PRIMARY}E6` },
                                     boxShadow: "none",
@@ -263,9 +260,9 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                                     justifyContent: "center",
                                 }}
                             >
-                                <UserCog size={22} color={PRIMARY} />
+                                <UserCog size={14} color={PRIMARY} />
                             </Box>
-                            <Typography variant="h6" fontWeight={700} color="text.primary">
+                            <Typography variant="body2" fontWeight={600} color="text.primary">
                                 Manage User Group
                             </Typography>
                         </Box>
@@ -288,7 +285,7 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                                         variant="outlined"
                                         sx={{
                                             borderRadius: 2,
-                                            maxHeight: "28vh",
+                                            maxHeight: "20vh",
                                             "&::-webkit-scrollbar": { width: 6 },
                                             "&::-webkit-scrollbar-thumb": { bgcolor: "rgba(0,0,0,0.1)", borderRadius: 3 }
                                         }}
@@ -357,7 +354,7 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                                         alignItems: "center",
                                         gap: 1,
                                         color: PRIMARY,
-                                        fontSize: "0.85rem",
+                                        fontSize: "0.7rem",
                                         fontWeight: 500,
                                         cursor: "pointer",
                                     }}
@@ -373,7 +370,7 @@ const CreateNewDemand = ({ open, onClose }: CreateNewDemandDialogProps) => {
                                         alignItems: "center",
                                         gap: 1,
                                         color: PRIMARY,
-                                        fontSize: "0.85rem",
+                                        fontSize: "0.7rem",
                                         fontWeight: 500,
                                         cursor: "pointer",
                                     }}

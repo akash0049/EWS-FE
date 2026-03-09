@@ -128,7 +128,7 @@ const StatusChip = ({ status }: { status: Status }) => {
 
 const ActionButtons = () => (
     <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
-        <Tooltip title="High Level Demand" arrow>
+        <Tooltip title="Click To High Level Demand" arrow>
             <IconButton
                 size="small"
                 sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
@@ -136,7 +136,7 @@ const ActionButtons = () => (
                 <TrendingUp size={16} />
             </IconButton>
         </Tooltip>
-        <Tooltip title="User Rule" arrow>
+        <Tooltip title="Click To User Rule" arrow>
             <IconButton
                 size="small"
                 sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
@@ -144,7 +144,7 @@ const ActionButtons = () => (
                 <Users size={16} />
             </IconButton>
         </Tooltip>
-        <Tooltip title="Rule Scheduler" arrow>
+        <Tooltip title="Click To Rule Scheduler" arrow>
             <IconButton
                 size="small"
                 sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
@@ -239,7 +239,7 @@ const Demands = () => {
                         letterSpacing="-0.5px"
                         color="text.primary"
                     >
-                        Demands
+                        Demand Selection
                     </Typography>
                     <Typography variant="caption" color="text.secondary" sx={{ mt: 0.25 }}>
                         Centralized control for market resource planning and monitoring

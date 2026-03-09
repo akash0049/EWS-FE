@@ -182,7 +182,7 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                             display: "inline-flex",
                             alignItems: "baseline",
                             gap: "2px",
-                            fontSize: "0.875rem",
+                            fontSize: "0.8rem",
                             fontWeight: 500,
                             color: disabled ? "text.disabled" : "text.primary",
                             mb: "4px",
@@ -234,7 +234,7 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                         borderColor,
                         borderRadius: "4px",
                         px: "14px",
-                        py: "10px",
+                        py: "0px",
                         cursor: disabled ? "not-allowed" : "pointer",
                         backgroundColor: disabled
                             ? "action.disabledBackground"
@@ -245,14 +245,14 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                             boxShadow: (theme) =>
                                 `0 0 0 2px ${theme.palette.primary.main}40`,
                         },
-                        minHeight: "40px",
+                        minHeight: "32px",
                     }}
                 >
                     {/* Displayed value / placeholder */}
                     <Typography
                         sx={{
                             flex: 1,
-                            fontSize: "0.875rem",
+                            fontSize: "0.8rem",
                             color: selectedOption
                                 ? disabled
                                     ? "text.disabled"
@@ -347,7 +347,7 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                                     onKeyDown={(e) => {
                                         if (e.key === "Escape") closeDropdown();
                                     }}
-                                    sx={{ fontSize: "0.875rem" }}
+                                    sx={{ fontSize: "0.8rem" }}
                                 />
                                 {query && (
                                     <IconButton
@@ -378,7 +378,7 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                                         sx={{
                                             px: 2,
                                             py: 1.5,
-                                            fontSize: "0.875rem",
+                                            fontSize: "0.8rem",
                                             color: "text.disabled",
                                             textAlign: "center",
                                         }}
@@ -397,7 +397,7 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                                                 sx={{
                                                     px: 2,
                                                     py: "9px",
-                                                    fontSize: "0.875rem",
+                                                    fontSize: "0.8rem",
                                                     cursor: "pointer",
                                                     backgroundColor: isSelected
                                                         ? "primary.main"
@@ -429,7 +429,7 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                     <Typography
                         sx={{
                             mt: "6px",
-                            fontSize: "0.78rem",
+                            fontSize: "0.6rem",
                             lineHeight: 1.45,
                             color: error ? "error.main" : "text.secondary",
                         }}
