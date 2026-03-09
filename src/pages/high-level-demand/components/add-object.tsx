@@ -11,8 +11,6 @@ import {
 import { Close } from "@mui/icons-material";
 import CustomSelectInput from "../../../components/inputs/select-input/select-input";
 
-const PRIMARY = "#0d7ff2";
-
 /* ── Dialog Props ── */
 interface AddObjectDialogProps {
     open: boolean;
@@ -27,11 +25,11 @@ const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
         <Dialog
             open={open}
             onClose={() => onClose(false)}
-            maxWidth="sm"
+            maxWidth="xs"
             fullWidth
             PaperProps={{
                 sx: {
-                    height: "45vh",
+                    height: "54vh",
                     borderRadius: 3,
                     overflow: "visible",
                     boxShadow: "0 24px 64px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08)",
@@ -74,7 +72,8 @@ const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
             <DialogContent sx={{ mx: 2, mt: 1 }}>
                 <Box
                     sx={{
-                        px: 4,
+                        py: 2,
+                        px: 1,
                         display: "flex",
                         flexDirection: "column",
                         gap: 3,
@@ -97,22 +96,25 @@ const AddObjectDialog = ({ open, onClose }: AddObjectDialogProps) => {
                         onChange={(value) => setObjectName(value != null ? String(value) : "")}
                     />
 
-                    <Button
-                        variant="contained"
-                        sx={{
-                            mt: 1,
-                            py: 1,
-                            borderRadius: 2,
-                            fontWeight: 700,
-                            textTransform: "none",
-                            fontSize: "0.9rem",
-                            bgcolor: PRIMARY,
-                            "&:hover": { bgcolor: `${PRIMARY}E6` },
-                            boxShadow: "none",
-                        }}
-                    >
-                        Add Object
-                    </Button>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'end',
+                        alignItems: 'center',
+                        gap: 1
+                    }}>
+                        <Button
+                            variant="outlined"
+                            onClick={() => { }}
+                        >
+                            Close
+                        </Button>
+                        <Button
+                            variant="contained"
+                            onClick={() => { }}
+                        >
+                            Submit
+                        </Button>
+                    </Box>
                 </Box>
             </DialogContent>
         </Dialog>

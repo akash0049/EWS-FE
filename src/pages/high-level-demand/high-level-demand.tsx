@@ -75,9 +75,13 @@ const HighLevelDemand = () => {
                     return (
                         <Tooltip title={full} placement="top" arrow>
                             <Typography
-                                variant="body2"
                                 color="text.secondary"
-                                sx={{ whiteSpace: 'nowrap', cursor: 'default' }}
+                                sx={{
+                                    whiteSpace: 'nowrap',
+                                    cursor: 'default',
+                                    fontSize: 'clamp(9px, 11px, 13px)',
+                                    fontWeight: 500
+                                }}
                             >
                                 {preview}
                             </Typography>
@@ -88,7 +92,7 @@ const HighLevelDemand = () => {
             {
                 accessorKey: "metadata",
                 header: "Available in Metadata",
-                size: 250,
+                size: 220,
                 Cell: ({ cell }) => {
                     const value = cell.getValue<string>();
 
@@ -115,6 +119,7 @@ const HighLevelDemand = () => {
                 header: "Actions",
                 enableSorting: false,
                 enableColumnFilter: false,
+                size: 100,
                 Cell: () => (
                     <Button size="small" sx={{ color: 'grey' }}>
                         <DeleteOutline />
@@ -155,55 +160,24 @@ const HighLevelDemand = () => {
                     <Button
                         variant="contained"
                         onClick={() => setOpenAddObject(true)}
-                        sx={{
-                            height: 40,
-                            borderRadius: 2,
-                            fontWeight: 500,
-                            textTransform: "none",
-                            backgroundColor: '#005EEF',
-                            '&:hover': {
-                                backgroundColor: 'primary.main',
-                            }
-                        }}
                     >
                         Add Object
                     </Button>
                     <Button
                         variant="contained"
                         onClick={() => setOpenDemandDetails(true)}
-                        sx={{
-                            height: 40,
-                            borderRadius: 2,
-                            fontWeight: 500,
-                            textTransform: "none",
-                            backgroundColor: '#005EEF',
-                            '&:hover': {
-                                backgroundColor: 'primary.main',
-                            }
-                        }}
                     >
                         Demand Details
                     </Button>
                     <Button
                         variant="contained"
                         onClick={() => { }}
-                        sx={{
-                            height: 40,
-                            borderRadius: 2,
-                            fontWeight: 500,
-                            textTransform: "none",
-                            backgroundColor: '#005EEF',
-                            '&:hover': {
-                                backgroundColor: 'primary.main',
-                            }
-                        }}
                     >
                         Save Requirement
                     </Button>
                 </Box>
             </Box>
 
-            {/* ── Table (no embedded top toolbar) ── */}
             <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <MaterialTable
                     columns={columns}
@@ -211,9 +185,8 @@ const HighLevelDemand = () => {
                     options={{ enableTopToolbar: true }}
                 />
             </Box>
-
+            {/* 
             <Box mt={0} display="flex" flexDirection="column" gap={0}>
-                {/* Footer Actions */}
                 <Box
                     display="flex"
                     justifyContent="space-between"
@@ -258,7 +231,7 @@ const HighLevelDemand = () => {
                         </Typography>
                     </Alert>
                 </Box>
-            </Box>
+            </Box> */}
 
             {/* Keyframe for pulsing dot */}
             <style>{`

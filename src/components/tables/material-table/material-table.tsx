@@ -85,8 +85,8 @@ export default function GenericTable<TData extends Record<string, any> = Record<
             sx: {
                 backgroundColor: '#FFFFFF',
                 color: '#404040',
+                fontSize: 'clamp(10px, 12px, 14px)',
                 fontWeight: 600,
-                fontSize: '0.825rem',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
             },
@@ -101,7 +101,8 @@ export default function GenericTable<TData extends Record<string, any> = Record<
         },
         muiTableBodyCellProps: {
             sx: {
-                fontSize: '0.875rem',
+                fontSize: 'clamp(9px, 11px, 13px)',
+                fontWeight: 500,
                 borderBottom: '1px solid',
                 borderColor: 'divider',
                 py: 1.2,
