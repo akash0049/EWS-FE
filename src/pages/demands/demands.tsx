@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import MaterialTable from "../../components/tables/material-table/material-table";
 import { type MRT_ColumnDef } from "material-react-table";
 import {
@@ -126,34 +127,38 @@ const StatusChip = ({ status }: { status: Status }) => {
     );
 };
 
-const ActionButtons = () => (
-    <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
-        <Tooltip title="Click To High Level Demand" arrow>
-            <IconButton
-                size="small"
-                sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
-            >
-                <TrendingUp size={16} />
-            </IconButton>
-        </Tooltip>
-        <Tooltip title="Click To User Rule" arrow>
-            <IconButton
-                size="small"
-                sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
-            >
-                <Users size={16} />
-            </IconButton>
-        </Tooltip>
-        <Tooltip title="Click To Rule Scheduler" arrow>
-            <IconButton
-                size="small"
-                sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
-            >
-                <CalendarDays size={16} />
-            </IconButton>
-        </Tooltip>
-    </Box>
-);
+const ActionButtons = () => {
+    const navigate = useNavigate();
+    return (
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
+            <Tooltip title="Click To High Level Demand" arrow>
+                <IconButton
+                    size="small"
+                    sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
+                    onClick={() => navigate("/high-level-demand")}
+                >
+                    <TrendingUp size={16} />
+                </IconButton>
+            </Tooltip>
+            <Tooltip title="Click To User Rule" arrow>
+                <IconButton
+                    size="small"
+                    sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
+                >
+                    <Users size={16} />
+                </IconButton>
+            </Tooltip>
+            <Tooltip title="Click To Rule Scheduler" arrow>
+                <IconButton
+                    size="small"
+                    sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
+                >
+                    <CalendarDays size={16} />
+                </IconButton>
+            </Tooltip>
+        </Box>
+    );
+}
 
 const COLUMNS: MRT_ColumnDef<Demand>[] = [
     {

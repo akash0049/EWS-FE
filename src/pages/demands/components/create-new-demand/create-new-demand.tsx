@@ -49,7 +49,6 @@ export default function NewDemandForm() {
                         label="Project Demand Name"
                         placeholder="Enter demand name"
                         required
-
                         value={demandName}
                         onChange={(e) => setDemandName(e.target.value)}
                         sx={{

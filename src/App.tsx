@@ -1,7 +1,8 @@
 import AppLayout from './components/layout/layout';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import Demands from './pages/demands/demands';
 import './App.css';
+import Demands from './pages/demands/demands';
+import HighLevelDemand from './pages/high-level-demand/high-level-demand';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <AppLayout>
         <Routes>
           <Route path="/" element={<Demands />} />
+          <Route path="/high-level-demand" element={<HighLevelDemand />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>

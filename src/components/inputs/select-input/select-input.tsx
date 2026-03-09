@@ -245,7 +245,7 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                             boxShadow: (theme) =>
                                 `0 0 0 2px ${theme.palette.primary.main}40`,
                         },
-                        minHeight: "32px",
+                        minHeight: "32px"
                     }}
                 >
                     {/* Displayed value / placeholder */}
@@ -310,7 +310,7 @@ const CustomSelectInput = forwardRef<HTMLDivElement, CustomSelectInputProps>(
                     anchorEl={anchorRef.current}
                     placement="bottom-start"
                     modifiers={[{ name: "offset", options: { offset: [0, 4] } }]}
-                    style={{ zIndex: 1300, width: anchorRef.current?.offsetWidth }}
+                    style={{ zIndex: 99999, width: anchorRef.current?.offsetWidth }}
                 >
                     <ClickAwayListener onClickAway={closeDropdown}>
                         <Paper
