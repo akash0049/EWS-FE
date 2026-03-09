@@ -15,7 +15,7 @@ import {
     Plus,
     Globe,
 } from "lucide-react";
-import CreateNewDemand from "./components/create-new-demand/create-new-demand";
+import NewDemandDialog from "./components/create-new-demand/new-demand-dialog";
 
 type Status = "Active" | "Inactive";
 
@@ -285,7 +285,7 @@ const Demands = () => {
             `}</style>
 
             {/* ── Create New Demand Dialog ── */}
-            <CreateNewDemand open={createOpen} onClose={() => setCreateOpen(false)} />
+            <NewDemandDialog open={createOpen} onClose={() => setCreateOpen(false)} />
         </Box>
     );
 };
