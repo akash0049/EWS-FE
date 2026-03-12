@@ -96,22 +96,11 @@ export default function NewDemandForm() {
                 </Box>
             </Box>
 
-            <Button
-                variant="contained"
-                sx={{
-                    mt: 1,
-                    py: 1,
-                    borderRadius: 2,
-                    fontWeight: 700,
-                    textTransform: "none",
-                    fontSize: "0.9rem",
-                    bgcolor: PRIMARY,
-                    "&:hover": { bgcolor: `${PRIMARY}E6` },
-                    boxShadow: "none",
-                }}
-            >
-                Create Demand
-            </Button>
+            <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 2 }}>
+                <Button variant="contained">
+                    Create Demand
+                </Button>
+            </Box>
         </Box>
     );
 }

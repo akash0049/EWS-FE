@@ -8,14 +8,14 @@ import {
     IconButton,
     Tooltip,
     Typography,
+    Chip
 } from "@mui/material";
 import {
-    TrendingUp,
     Users,
     CalendarDays,
-    Plus,
     Globe,
 } from "lucide-react";
+import { TrendingUp } from "@mui/icons-material";
 import NewDemandDialog from "./components/create-new-demand/new-demand-dialog";
 
 type Status = "Active" | "Inactive";
@@ -27,10 +27,6 @@ type Demand = {
     market: string;
 };
 
-const STATUS_CONFIG: Record<Status, { bg: string; color: string; dotColor: string; pulse: boolean }> = {
-    Active: { bg: "#F0FDF4", color: "#15803D", dotColor: "#22C55E", pulse: false },
-    Inactive: { bg: "#F1F5F9", color: "#64748B", dotColor: "#94A3B8", pulse: false },
-};
 
 const ALL_DATA: Demand[] = [
     {
@@ -107,26 +103,6 @@ const ALL_DATA: Demand[] = [
     },
 ];
 
-const StatusChip = ({ status }: { status: Status }) => {
-    const cfg = STATUS_CONFIG[status];
-    return (
-        <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.75, px: 1.25, py: 0.5, borderRadius: "999px", bgcolor: cfg.bg }}>
-            <Box
-                sx={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    bgcolor: cfg.dotColor,
-                    ...(cfg.pulse && { animation: "pulse 1.5s ease-in-out infinite" }),
-                }}
-            />
-            <Typography sx={{ fontSize: "0.72rem", fontWeight: 600, color: cfg.color, lineHeight: 1 }}>
-                {status}
-            </Typography>
-        </Box>
-    );
-};
-
 const ActionButtons = () => {
     const navigate = useNavigate();
     return (
@@ -137,7 +113,7 @@ const ActionButtons = () => {
                     sx={{ color: "text.disabled", borderRadius: 1.5, "&:hover": { color: "primary.main", bgcolor: "primary.50" } }}
                     onClick={() => navigate("/1/high-level-demand")}
                 >
-                    <TrendingUp size={16} />
+                    <TrendingUp fontSize="small" />
                 </IconButton>
             </Tooltip>
             <Tooltip title="Click To User Rule" arrow>
@@ -166,35 +142,67 @@ const COLUMNS: MRT_ColumnDef<Demand>[] = [
     {
         header: "Demand Name",
         accessorKey: "name",
-        size: 240,
+        size: 200,
         Cell: ({ row }) => (
-            <Box>
-                <Typography variant="body2" color="text.secondary">
-                    {row.original.name}
-                </Typography>
-            </Box>
+            <Typography
+                sx={{
+                    whiteSpace: 'nowrap',
+                    cursor: 'default',
+                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontWeight: 500
+                }}
+            >
+                {row.original.name}
+            </Typography>
         ),
     },
     {
         header: "Status",
         accessorKey: "status",
         size: 100,
-        Cell: ({ cell }) => <StatusChip status={cell.getValue<Status>()} />,
+        Cell: ({ cell }) => {
+            const value = cell.getValue<string>();
+
+            return (
+                <Chip
+                    label={value}
+                    size="small"
+                    sx={{
+                        fontSize: 'clamp(9px, 11px, 13px)',
+                        fontWeight: 500,
+                        borderRadius: "4px",
+                        px: 0.5,
+                        height: 24,
+
+                        bgcolor: value === "Active" ? "#E6F6F1" : "#FFEAEA",
+                        color: value === "Active" ? "#008651" : "#D92D20",
+                        border: `1px solid ${value === "Active" ? "#008651" : "#D92D20"}`,
+                        ".MuiChip-label": {
+                            px: 0.5,
+                        },
+                    }}
+                />
+
+            );
+        },
     },
     {
         header: "Description",
         accessorKey: "description",
-        size: 300,
+        size: 350,
         Cell: ({ cell }) => {
             const full = cell.getValue<string>();
             const words = full.split(' ');
-            const preview = words.length > 5 ? words.slice(0, 5).join(' ') + '…' : full;
+            const preview = words.length > 8 ? words.slice(0, 8).join(' ') + '…' : full;
             return (
                 <Tooltip title={full} placement="top" arrow>
                     <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ whiteSpace: 'nowrap', cursor: 'default' }}
+                        sx={{
+                            whiteSpace: 'nowrap',
+                            cursor: 'default',
+                            fontSize: 'clamp(9px, 11px, 13px)',
+                            fontWeight: 500
+                        }}
                     >
                         {preview}
                     </Typography>
@@ -205,11 +213,16 @@ const COLUMNS: MRT_ColumnDef<Demand>[] = [
     {
         header: "Market",
         accessorKey: "market",
-        size: 160,
+        size: 120,
         Cell: ({ cell }) => (
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
                 <Globe size={15} color="#94A3B8" />
-                <Typography variant="body2" color="text.secondary">
+                <Typography sx={{
+                    whiteSpace: 'nowrap',
+                    cursor: 'default',
+                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontWeight: 500
+                }}>
                     {cell.getValue<string>()}
                 </Typography>
             </Box>
@@ -249,25 +262,14 @@ const Demands = () => {
                         Demand Selection
                     </Typography>
                     <Typography variant="caption" color="text.secondary" sx={{ mt: 0.25 }}>
-                        Centralized control for market resource planning and monitoring
+                        Engagement Initiation - Capture High Level Demand - Capture Demand Details
                     </Typography>
                 </Box>
 
                 <Box sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
                     <Button
                         variant="contained"
-                        startIcon={<Plus size={16} />}
                         onClick={() => setCreateOpen(true)}
-                        sx={{
-                            height: 40,
-                            borderRadius: 2,
-                            fontWeight: 500,
-                            textTransform: "none",
-                            backgroundColor: '#005EEF',
-                            '&:hover': {
-                                backgroundColor: 'primary.main',
-                            }
-                        }}
                     >
                         Create New Demand
                     </Button>

@@ -32,7 +32,10 @@ const NewDemandDialog = ({ open, onClose }: NewDemandDialogProps) => {
     return (
         <Dialog
             open={open}
-            onClose={onClose}
+            onClose={(_event, reason) => {
+                if (reason === "backdropClick") return; // prevent close on outside click
+                onClose();
+            }}
             maxWidth="sm"
             fullWidth
             PaperProps={{
