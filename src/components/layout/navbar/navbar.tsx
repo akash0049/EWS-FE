@@ -9,7 +9,7 @@ import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
-import GDTLogo from '../../../assets/GDT With Grey Backgroud.png';
+import GDTLogo from '../../../assets/images/gdt-grey-bg.png';
 import { LogOutIcon } from 'lucide-react';
 
 const user = {
