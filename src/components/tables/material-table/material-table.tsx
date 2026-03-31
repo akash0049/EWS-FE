@@ -24,7 +24,7 @@ export interface GenericTableProps<TData extends Record<string, any> = Record<st
 
 /** Shared small button sx for Previous / Next */
 const navBtnSx = (disabled: boolean) => ({
-    fontSize: '0.8rem',
+    fontSize: 'clamp(10px, 12px, 14px)',
     minWidth: 'auto',
     px: 1.5,
     height: '26px',
@@ -87,7 +87,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
             sx: {
                 backgroundColor: '#FFFFFF',
                 color: '#404040',
-                fontSize: 'clamp(10px, 12px, 14px)',
+                fontSize: 'clamp(9px, 11px, 13px)',
                 fontWeight: 600,
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
@@ -103,7 +103,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
         },
         muiTableBodyCellProps: {
             sx: {
-                fontSize: 'clamp(9px, 11px, 13px)',
+                fontSize: 'clamp(8px, 10px, 12px)',
                 fontWeight: 500,
                 borderBottom: '1px solid',
                 borderColor: 'divider',
@@ -118,7 +118,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
             InputProps: {
                 sx: {
                     height: '30px',
-                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontSize: 'clamp(8px, 10px, 12px)',
                     fontWeight: 500,
                     borderRadius: '6px',
                     '& .MuiOutlinedInput-notchedOutline': {
@@ -140,7 +140,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
             inputProps: {
                 sx: {
                     py: '4px',
-                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontSize: 'clamp(8px, 10px, 12px)',
                 },
             },
         },
@@ -151,14 +151,14 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                 /* wrapper input root */
                 '& .MuiInputBase-root': {
                     height: '28px',
-                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontSize: 'clamp(8px, 10px, 12px)',
                     fontWeight: 500,
                     borderRadius: '6px',
                 },
                 /* native <input> inner padding + font */
                 '& .MuiInputBase-input': {
                     padding: '3px 8px',
-                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontSize: 'clamp(8px, 10px, 12px)',
                     fontWeight: 500,
                 },
                 /* default border */
@@ -193,7 +193,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                 },
                 sx: {
                     '& .MuiButtonBase-root': {
-                        fontSize: '11px',
+                        fontSize: 'clamp(8px, 10px, 12px)',
                         px: 1.5,
                         py: '6px',
                         minHeight: '28px',
@@ -232,7 +232,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                 },
                 '& .MuiChip-root': {
                     height: '18px',
-                    fontSize: '10px',
+                    fontSize: 'clamp(8px, 10px, 12px)',
                     borderRadius: '4px',
                     backgroundColor: 'rgba(0, 94, 239, 0.1)',
                     color: '#005EEF',
@@ -244,7 +244,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                     fontWeight: 600,
                 },
                 '& .MuiChip-deleteIcon': {
-                    fontSize: '12px',
+                    fontSize: 'clamp(8px, 10px, 12px)',
                     color: '#005EEF',
                     '&:hover': {
                         color: '#0047B3', // darker shade for hover
@@ -267,7 +267,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
             sx: {
                 '& .MuiInputBase-root': {
                     height: '30px',
-                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontSize: 'clamp(8px, 10px, 12px)',
                     fontWeight: 500,
                     borderRadius: '6px',
                 },
@@ -292,7 +292,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
         /* ── Show / Hide columns popover ── */
         muiColumnVisibilityMenuItemProps: {
             sx: {
-                fontSize: 'clamp(9px, 11px, 13px)',
+                fontSize: 'clamp(10px, 12px, 14px)',
                 fontWeight: 500,
                 py: 0.5,
                 minHeight: 'unset',
@@ -343,7 +343,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                 >
                     {/* ── Left: Rows per page ── */}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Typography sx={{ fontSize: '0.8rem', color: 'text.secondary', whiteSpace: 'nowrap' }}>
+                        <Typography sx={{ fontSize: 'clamp(10px, 12px, 14px)', color: 'text.secondary', whiteSpace: 'nowrap' }}>
                             Rows per page:
                         </Typography>
                         <Select
@@ -351,14 +351,14 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                             value={pageSize}
                             onChange={(e) => table.setPageSize(Number(e.target.value))}
                             sx={{
-                                fontSize: '0.8rem',
+                                fontSize: 'clamp(10px, 12px, 14px)',
                                 height: '26px',
-                                '& .MuiSelect-select': { py: '3px', fontSize: '0.8rem' },
+                                '& .MuiSelect-select': { py: '3px', fontSize: 'clamp(10px, 12px, 14px)' },
                                 '& .MuiOutlinedInput-notchedOutline': { borderColor: 'divider' },
                             }}
                         >
                             {[10, 25, 50].map((size) => (
-                                <MenuItem key={size} value={size} sx={{ fontSize: '0.8rem' }}>
+                                <MenuItem key={size} value={size} sx={{ fontSize: 'clamp(10px, 12px, 14px)' }}>
                                     {size}
                                 </MenuItem>
                             ))}
@@ -366,7 +366,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                     </Box>
 
                     {/* ── Center: Showing X to Y of Z ── */}
-                    <Typography sx={{ fontSize: '0.8rem', color: 'text.secondary', fontWeight: 500 }}>
+                    <Typography sx={{ fontSize: 'clamp(10px, 12px, 14px)', color: 'text.secondary', fontWeight: 500 }}>
                         Showing {from} to {to} of {totalRows} results
                     </Typography>
 
@@ -391,7 +391,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                                     variant={'outlined'}
                                     onClick={() => table.setPageIndex(page)}
                                     sx={{
-                                        fontSize: '0.8rem',
+                                        fontSize: 'clamp(10px, 12px, 14px)',
                                         minWidth: '26px',
                                         width: '26px',
                                         height: '26px',
@@ -424,14 +424,14 @@ export default function GenericTable<TData extends Record<string, any> = Record<
         muiToolbarAlertBannerProps: {
             sx: {
                 '& .MuiAlert-message': {
-                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontSize: 'clamp(10px, 12px, 14px)',
                     fontWeight: 500,
                 },
                 '& .MuiChip-label': {
-                    fontSize: 'clamp(9px, 11px, 13px)',
+                    fontSize: 'clamp(10px, 12px, 14px)',
                 },
                 '& .MuiButton-root': {
-                    fontSize: '0.75rem',
+                    fontSize: 'clamp(10px, 12px, 14px)',
                     padding: '2px 8px',
                     minWidth: 'auto',
                     textTransform: 'none',

@@ -35,7 +35,7 @@ const Demands = () => {
             >
                 <Box>
                     <Typography
-                        variant="h6"
+                        variant="subtitle1"
                         fontWeight={800}
                         letterSpacing="-0.5px"
                         color="text.primary"
@@ -63,9 +63,9 @@ const Demands = () => {
                 <MaterialTable
                     columns={COLUMNS}
                     data={data}
-                    options={{ 
+                    options={{
                         enableTopToolbar: true,
-                        globalFilterFn: 'contains', 
+                        globalFilterFn: 'contains',
                     }}
                 />
             </Box>
@@ -79,10 +79,10 @@ const Demands = () => {
             `}</style>
 
             {/* ── Create New Demand Dialog ── */}
-            <NewDemandDialog 
-                open={createOpen} 
-                onClose={() => setCreateOpen(false)} 
-                onCreate={handleCreateDemand} 
+            <NewDemandDialog
+                open={createOpen}
+                onClose={() => setCreateOpen(false)}
+                onCreate={handleCreateDemand}
             />
         </Box>
     );
