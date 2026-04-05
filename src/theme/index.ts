@@ -37,7 +37,7 @@ const theme = createTheme({
         body1: { fontWeight: 400 },
         body2: { fontWeight: 400 },
         button: {
-            fontSize: 'clamp(8.5px, 10.5px, 12.5px)',
+            fontSize: 'clamp(9px, 11px, 13px)',
             fontWeight: 600,
         },
     },

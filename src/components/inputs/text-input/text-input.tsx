@@ -46,7 +46,6 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
         const autoId = useId();
         const inputId = idProp ?? autoId;
 
-        const helperText = error ? (errorMessage ?? description) : description;
 
         return (
             <Box
@@ -139,11 +138,10 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
                             padding: "7.5px 14px",
                             height: "20px",
                             boxSizing: "border-box",
+                            
                             "&::placeholder": {
                                 fontSize: "0.8rem",
                             },
-                            // Ensure the cursor isn't a text I-beam if you don't want it to look editable
-                            // Remove this line if you still want users to feel they can click and drag to copy text
                             "&.Mui-readOnly": {
                                 color: "text.secondary",
                             }
@@ -152,17 +150,32 @@ const CustomTextInput = forwardRef<HTMLDivElement, CustomTextInputProps>(
                     {...rest}
                 />
 
-                {/* ── Mantine-style description / error message ── */}
-                {helperText && (
+                {/* ── Mantine-style description ── */}
+                {description && (
                     <Typography
                         sx={{
                             mt: "6px",
-                            fontSize: "0.6rem",
+                            fontSize: "clamp(7.5px, 9.5px, 11.5px)",
                             lineHeight: 1.45,
-                            color: error ? "error.main" : "text.secondary",
+                            color: "text.secondary",
+                            whiteSpace: "pre-line",
                         }}
                     >
-                        {helperText}
+                        {description}
+                    </Typography>
+                )}
+
+                {/* ── Dynamic Error Message ── */}
+                {error && errorMessage && (
+                    <Typography
+                        sx={{
+                            mt: "4px",
+                            fontSize: "clamp(7.5px, 9.5px, 11.5px)",
+                            lineHeight: 1.45,
+                            color: "error.main",
+                        }}
+                    >
+                        {errorMessage}
                     </Typography>
                 )}
             </Box>

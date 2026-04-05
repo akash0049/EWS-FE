@@ -5,20 +5,23 @@ import {
     Typography,
 } from "@mui/material";
 import MaterialTable from "../../components/tables/material-table/material-table";
-import NewDemandDialog from "./components/create-new-demand/new-demand-dialog";
-import { FilePlusCorner } from 'lucide-react';
+import { FilePlusCorner, Users } from 'lucide-react';
 
 import { COLUMNS } from "./constants/columns";
-import { ALL_DATA } from "./constants/data";
+import { DEMANDS } from "./constants/data";
 import type { Demand } from "./constants/types";
 
+import CreateNewDemand from "./components/create-new-demand";
+import ManageUserGroups from "./components/manage-user-groups";
+
 const Demands = () => {
-    const [createOpen, setCreateOpen] = useState(false);
-    const [data, setData] = useState<Demand[]>(ALL_DATA);
+    const [createDemandOpen, setCreateDemandOpen] = useState(false);
+    const [manageUserGroupsOpen, setManageUserGroupsOpen] = useState(false);
+    const [data, setData] = useState<Demand[]>(DEMANDS);
 
     const handleCreateDemand = (newDemand: Demand) => {
         setData((prev) => [newDemand, ...prev]);
-        setCreateOpen(false);
+        setCreateDemandOpen(false);
     };
 
     return (
@@ -51,9 +54,16 @@ const Demands = () => {
                     <Button
                         variant="contained"
                         startIcon={<FilePlusCorner size={16} />}
-                        onClick={() => setCreateOpen(true)}
+                        onClick={() => setCreateDemandOpen(true)}
                     >
                         Create New Demand
+                    </Button>
+                    <Button
+                        variant="contained"
+                        startIcon={<Users size={16} />}
+                        onClick={() => setManageUserGroupsOpen(true)}
+                    >
+                        Manage User Groups
                     </Button>
                 </Box>
             </Box>
@@ -79,11 +89,21 @@ const Demands = () => {
             `}</style>
 
             {/* ── Create New Demand Dialog ── */}
-            <NewDemandDialog
-                open={createOpen}
-                onClose={() => setCreateOpen(false)}
-                onCreate={handleCreateDemand}
-            />
+            {createDemandOpen && 
+                <CreateNewDemand
+                    open={createDemandOpen}
+                    onClose={() => setCreateDemandOpen(false)}
+                    onCreate={handleCreateDemand}
+                />
+            }
+
+            {/* ── Manage User Groups Dialog ── */}
+            {manageUserGroupsOpen &&
+                <ManageUserGroups
+                    open={manageUserGroupsOpen}
+                    onClose={() => setManageUserGroupsOpen(false)}
+                />
+            }
         </Box>
     );
 };

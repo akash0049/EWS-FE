@@ -118,7 +118,7 @@ export const COLUMNS: MRT_ColumnDef<Demand>[] = [
                             fontWeight: 500
                         }}
                     >
-                        {preview}
+                        {preview || 'N/A'}
                     </Typography>
                 </Tooltip>
             );
