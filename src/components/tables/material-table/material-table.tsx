@@ -3,14 +3,23 @@ import {
     useMaterialReactTable,
     type MRT_ColumnDef,
     type MRT_TableOptions,
+    MRT_ToggleFiltersButton,
+    MRT_ShowHideColumnsButton,
+    MRT_ToggleFullScreenButton,
 } from 'material-react-table';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
+import { alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import { Search } from '@mui/icons-material';
+
+import './material-table.scss';
 
 export interface GenericTableProps<TData extends Record<string, any> = Record<string, any>> {
+    searchPlaceholder: string;
     columns: MRT_ColumnDef<TData>[];
     data: TData[];
     isLoading?: boolean;
@@ -36,6 +45,7 @@ const navBtnSx = (disabled: boolean) => ({
 });
 
 export default function GenericTable<TData extends Record<string, any> = Record<string, any>>({
+    searchPlaceholder,
     columns,
     data,
     isLoading = false,
@@ -103,47 +113,14 @@ export default function GenericTable<TData extends Record<string, any> = Record<
         },
         muiTableBodyCellProps: {
             sx: {
-                fontSize: 'clamp(8px, 10px, 12px)',
+                fontSize: 'clamp(9px, 11px, 13px)',
                 fontWeight: 500,
                 borderBottom: '1px solid',
                 borderColor: 'divider',
                 py: 1.2,
             },
         },
-        /* ── Global search input ── */
-        muiSearchTextFieldProps: {
-            size: 'small',
-            variant: 'outlined',
-            placeholder: 'Search…',
-            InputProps: {
-                sx: {
-                    height: '30px',
-                    fontSize: 'clamp(8px, 10px, 12px)',
-                    fontWeight: 500,
-                    borderRadius: '6px',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'divider',
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#005EEF',
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#005EEF',
-                        borderWidth: '1.5px',
-                    },
-                    '& .MuiInputAdornment-root svg': {
-                        fontSize: '16px',
-                        color: 'text.secondary',
-                    },
-                },
-            },
-            inputProps: {
-                sx: {
-                    py: '4px',
-                    fontSize: 'clamp(8px, 10px, 12px)',
-                },
-            },
-        },
+
         /* ── Column-level filter inputs (text) ── */
         muiFilterTextFieldProps: {
             variant: 'standard',
@@ -183,6 +160,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
         },
         /* ── Column-level filter select (select / multi-select variants) ── */
         muiFilterSelectProps: {
+            variant: 'standard',
             MenuProps: {
                 PaperProps: {
                     elevation: 4,
@@ -192,8 +170,9 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                     },
                 },
                 sx: {
-                    '& .MuiButtonBase-root': {
-                        fontSize: 'clamp(8px, 10px, 12px)',
+                    '& .MuiMenuItem-root': {
+                        fontSize: 'clamp(9px, 11px, 13px)',
+                        fontWeight: 500,
                         px: 1.5,
                         py: '6px',
                         minHeight: '28px',
@@ -217,22 +196,27 @@ export default function GenericTable<TData extends Record<string, any> = Record<
             },
             sx: {
                 minHeight: '28px',
-                fontSize: 'clamp(8px, 10px, 12px)',
+                fontSize: 'clamp(9px, 11px, 13px)',
                 fontWeight: 500,
-                borderRadius: '6px',
+                cursor: 'pointer',
+                width: '100%',
                 '& .MuiSelect-select': {
                     padding: '3px 8px',
-                    fontSize: '11px',
+                    fontSize: 'clamp(9px, 11px, 13px)',
                     fontWeight: 500,
                     lineHeight: '22px',
                     display: 'flex',
                     flexWrap: 'wrap',
                     gap: '4px',
                     alignItems: 'center',
+                    cursor: 'pointer',
+                },
+                '& .MuiInput-input': {
+                    cursor: 'pointer',
                 },
                 '& .MuiChip-root': {
                     height: '18px',
-                    fontSize: 'clamp(8px, 10px, 12px)',
+                    fontSize: 'clamp(9px, 11px, 13px)',
                     borderRadius: '4px',
                     backgroundColor: 'rgba(0, 94, 239, 0.1)',
                     color: '#005EEF',
@@ -244,21 +228,11 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                     fontWeight: 600,
                 },
                 '& .MuiChip-deleteIcon': {
-                    fontSize: 'clamp(8px, 10px, 12px)',
+                    fontSize: 'clamp(9px, 11px, 13px)',
                     color: '#005EEF',
                     '&:hover': {
-                        color: '#0047B3', // darker shade for hover
+                        color: '#0047B3',
                     },
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'rgba(0,0,0,0.18)',
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#005EEF',
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#005EEF',
-                    borderWidth: '1.5px',
                 },
             },
         },
@@ -267,7 +241,7 @@ export default function GenericTable<TData extends Record<string, any> = Record<
             sx: {
                 '& .MuiInputBase-root': {
                     height: '30px',
-                    fontSize: 'clamp(8px, 10px, 12px)',
+                    fontSize: 'clamp(9px, 11px, 13px)',
                     fontWeight: 500,
                     borderRadius: '6px',
                 },
@@ -287,27 +261,52 @@ export default function GenericTable<TData extends Record<string, any> = Record<
                     },
                     '& svg': { fontSize: '18px' },
                 },
+
             },
         },
-        /* ── Show / Hide columns popover ── */
-        muiColumnVisibilityMenuItemProps: {
-            sx: {
-                fontSize: 'clamp(10px, 12px, 14px)',
-                fontWeight: 500,
-                py: 0.5,
-                minHeight: 'unset',
-                '& .MuiSwitch-root': { transform: 'scale(0.8)' },
-                '& .MuiSwitch-track': { borderRadius: '10px' },
-                '& .MuiSwitch-thumb': { width: '12px', height: '12px' },
-                '& .MuiFormControlLabel-label': {
-                    fontSize: 'clamp(9px, 11px, 13px)',
-                    fontWeight: 500,
-                },
-                '&:hover': {
-                    bgcolor: 'rgba(0,94,239,0.05)',
-                    color: '#005EEF',
-                },
-            },
+        /* ── Toolbar internal actions: exclude default search toggle ── */
+        renderToolbarInternalActions: ({ table }) => (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                <MRT_ToggleFiltersButton table={table} />
+                <MRT_ShowHideColumnsButton table={table} />
+                <MRT_ToggleFullScreenButton table={table} />
+            </Box>
+        ),
+        /* ── Custom global search input (styled like CustomSearchInput) ── */
+        renderTopToolbarCustomActions: ({ table }) => {
+            return (
+                <Box
+                    sx={{
+                        width: '20%',
+                        height: '35px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        bgcolor: 'action.hover',
+                        borderRadius: 1,
+                        px: 1.5,
+                        py: 0.5,
+                        transition: 'all 0.2s',
+                        border: '1px solid transparent',
+                        '&:focus-within': {
+                            bgcolor: 'background.paper',
+                            borderColor: 'primary.main',
+                            boxShadow: (theme: any) => `0 0 0 3px ${alpha(theme.palette.primary.main, 0.1)}`,
+                        },
+                    }}
+                >
+                    <Search sx={{ fontSize: 18, color: 'text.secondary' }} />
+                    <InputBase
+                        placeholder={searchPlaceholder}
+                        value={table.getState().globalFilter ?? ''}
+                        onChange={(e) => table.setGlobalFilter(e.target.value)}
+                        sx={{
+                            flex: 1,
+                            fontSize: '0.8rem',
+                        }}
+                    />
+                </Box>
+            );
         },
         renderBottomToolbar: ({ table }) => {
             const { pageIndex, pageSize } = table.getState().pagination;

@@ -80,6 +80,7 @@ const HighLevelDemand = () => {
                         Save Requirement
                     </Button>
                     <CustomIconButton
+                        size="medium"
                         title="Click here to Configure Rules"
                         icon={<ArrowCircleRight fontSize="medium" />}
                         onClick={() => navigate("/1/user-rule")}
@@ -89,6 +90,7 @@ const HighLevelDemand = () => {
 
             <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <MaterialTable
+                    searchPlaceholder="Search Objects..."
                     columns={columns}
                     data={tableData}
                     options={{

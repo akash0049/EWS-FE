@@ -1,0 +1,15 @@
+.MuiPaper-root {
+    .MuiList-root {
+        .MuiMenuItem-root {
+            font-size: clamp(9px, 11px, 13px);
+
+            .MuiBox-root {
+                .MuiFormControlLabel-root {
+                    .MuiTypography-root {
+                        font-size: clamp(9px, 11px, 13px);
+                    }
+                }
+            }
+        }
+    }
+}

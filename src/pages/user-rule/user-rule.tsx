@@ -55,6 +55,7 @@ const UserRule = () => {
 
                 <Box sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
                     <CustomIconButton
+                        size="medium"
                         title="Click here to Configure Rules"
                         icon={<ArrowCircleLeft fontSize="medium" />}
                         onClick={() => navigate("/1/high-level-demand")}
@@ -75,6 +76,7 @@ const UserRule = () => {
 
             <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <MaterialTable
+                    searchPlaceholder="Search Rules..."
                     columns={columns}
                     data={tableData}
                     options={{

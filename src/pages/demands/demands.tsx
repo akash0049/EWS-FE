@@ -71,6 +71,7 @@ const Demands = () => {
             {/* ── Table (no embedded top toolbar) ── */}
             <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                 <MaterialTable
+                    searchPlaceholder="Search Demands..."
                     columns={COLUMNS}
                     data={data}
                     options={{

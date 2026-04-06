@@ -55,19 +55,7 @@ export const COLUMNS: MRT_ColumnDef<Demand>[] = [
     {
         header: "Demand Name",
         accessorKey: "name",
-        size: 200,
-        Cell: ({ row }) => (
-            <Typography
-                sx={{
-                    whiteSpace: 'nowrap',
-                    cursor: 'default',
-                    fontSize: 'clamp(9px, 11px, 13px)',
-                    fontWeight: 500
-                }}
-            >
-                {row.original.name}
-            </Typography>
-        ),
+        size: 200
     },
     {
         header: "Status",
@@ -150,6 +138,8 @@ export const COLUMNS: MRT_ColumnDef<Demand>[] = [
         size: 130,
         enableSorting: false,
         enableColumnFilter: false,
+        enableHiding: false,
+        visibleInShowHideMenu: false,
         muiTableHeadCellProps: { align: "center" },
         Cell: () => <ActionButtons />,
     },
